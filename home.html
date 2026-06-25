@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deeni Rehbar - Premium Edition</title>
+    <style>
+        :root {
+            --p-green: #1b4332;
+            --light-bg: #f0f7f0;
+            --gold: #c5a059;
+            --white: #ffffff;
+            --text-dark: #2d3436;
+            --card-bg: #ffffff;
+        }
+
+       
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: var(--light-bg); margin: 0; padding-bottom: 100px; color: var(--text-dark); transition: 0.3s; }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100%; width: 0; position: fixed; z-index: 2000; top: 0; left: 0;
+            background-color: var(--p-green); overflow-x: hidden; transition: 0.5s; padding-top: 60px;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+        }
+        [dir="rtl"] .sidebar { left: auto; right: 0; }
+        .sidebar-content { padding: 20px; color: white; }
+        .sidebar-item { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 10px; }
+        .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; color: white; text-decoration: none; cursor: pointer; }
+        .sidebar select, .sidebar button { background: var(--gold); border: none; padding: 10px; color: white; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
+
+        /* Top Bar */
+        .top-nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--p-green); color: white; position: sticky; top: 0; z-index: 1000; }
+        .menu-btn { font-size: 24px; cursor: pointer; }
+        .app-name { font-weight: 800; font-size: 18px; }
+        .coin-display { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 25px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+
+        /* Header */
+        .header-bg { background: linear-gradient(135deg, #a8d5ba 0%, #d4e7d7 100%); padding: 50px 20px 80px; text-align: center; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; }
+        .bismillah { font-size: 32px; color: #1b4332; font-weight: bold; margin-bottom: 10px; font-family: 'Amiri', serif; }
+        #hijri-date { font-weight: 600; color: var(--p-green); opacity: 0.8; }
+
+        /* Search/AI Bar */
+        .search-container { margin: -35px 25px 25px; }
+        .ai-bar { background: var(--card-bg); padding: 15px 20px; border-radius: 20px; display: flex; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .ai-input { border:none; outline:none; margin-left:10px; width:100%; background: transparent; color: var(--text-dark); font-size: 15px; }
+
+        /* Prayer Card */
+        .prayer-card { background: var(--card-bg); margin: 0 20px 20px; padding: 22px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .waqt-row { display: flex; justify-content: space-between; gap: 8px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px; }
+        .waqt-item { flex: 1; min-width: 60px; background: #f8fbf8; padding: 12px 5px; border-radius: 15px; text-align: center; border: 1px solid #eef2ee; }
+        .waqt-item b { display: block; color: var(--p-green); font-size: 12px; margin-bottom: 5px; }
+        .waqt-item span { font-weight: bold; font-size: 13px; color: var(--gold); }
+
+        /* Content Cards */
+        .section-title { padding: 0 25px; font-size: 17px; font-weight: bold; margin-bottom: 12px; display: block; color: var(--p-green); }
+        .content-card { background: var(--card-bg); margin: 0 20px 20px; padding: 22px; border-radius: 25px; border: 1px solid #e8eee8; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .card-label { font-size: 11px; color: var(--gold); font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .arabic-text { font-size: 24px; direction: rtl; line-height: 1.8; color: var(--p-green); margin-bottom: 10px; }
+        .task-card { border-left: 6px solid var(--gold); }
+
+        /* Features Grid */
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 10px 20px; }
+        .feature-item { text-align: center; text-decoration: none; color: inherit; }
+        .feature-icon { background: var(--card-bg); width: 60px; height: 60px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 8px; box-shadow: 0 6px 15px rgba(0,0,0,0.06); border: 1px solid #f0f0f0; }
+        .feature-title { font-size: 11px; font-weight: 600; line-height: 1.2; display: block; min-height: 2.4em; }
+        
+        .view-more { text-align: center; padding: 15px; color: var(--p-green); font-weight: bold; cursor: pointer; font-size: 14px; }
+        .hidden { display: none !important; }
+
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--card-bg); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
+        .nav-link { text-decoration: none; color: #888; text-align: center; flex: 1; }
+        .nav-link small { display: block; font-size: 10px; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="sidebar-content">
+          
+            <div class="sidebar-item">
+                <span data-key="select_lang">Language</span>
+                <select id="lang-select" onchange="changeLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="ar">Arabic</option>
+                    <option value="ur" selected>Urdu</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-nav-bar">
+        <span class="menu-btn" onclick="openNav()">☰</span>
+        <span class="app-name" data-key="app_name">DEENI REHBAR</span>
+        <div class="coin-display">🪙 <span id="user-coins">0</span></div>
+    </div>
+
+    <div class="header-bg">
+        <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+        <div id="hijri-date">Loading Hijri Date...</div>
+    </div>
+
+    <div class="search-container">
+        <div class="ai-bar" onclick="window.open('https://gemini.google.com', '_blank')">
+            ✨ <input type="text" class="ai-input" data-key="ai_placeholder" readonly>
+        </div>
+    </div>
+
+    <div class="prayer-card">
+        <span class="card-label" data-key="prayer_times">🕋 PRAYER TIMES</span>
+        <div class="waqt-row">
+            <div class="waqt-item"><b data-key="fajr">Fajr</b><span id="fajr-t">--:--</span></div>
+            <div class="waqt-item"><b data-key="dhuhr">Dhuhr</b><span id="dhuhr-t">--:--</span></div>
+            <div class="waqt-item"><b data-key="asr">Asr</b><span id="asr-t">--:--</span></div>
+            <div class="waqt-item"><b data-key="maghrib">Maghrib</b><span id="maghrib-t">--:--</span></div>
+            <div class="waqt-item"><b data-key="isha">Isha</b><span id="isha-t">--:--</span></div>
+        </div>
+    </div>
+
+    <span class="section-title hidden" id="edu-section-title" data-key="edu_section_title">Educational Skills</span>
+    
+    <div id="english-card" class="content-card hidden" onclick="location.href='english.html'" style="cursor: pointer; background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%); border-left: 6px solid #1976d2;">
+        <span class="card-label" style="color: #1976d2;">🌍 LANGUAGE LEARNING</span>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="font-size: 35px;">🇬🇧</div>
+            <div style="text-align: left;">
+                <h3 style="margin: 0; font-size: 18px; color: #1b4332;" data-key="eng_card_title">Learn English</h3>
+                <p style="margin: 0; font-size: 13px; color: #666;" data-key="eng_card_desc">Videos aur Books se English seekhein</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="taleem-card" class="content-card hidden" onclick="window.open('https://youtube.com/playlist?list=PLorkDoZukOG4EoYrANJD2Z-G0c3zwu_v2&si=7EZ3tUCOe00zY9OO')" style="cursor: pointer; background: linear-gradient(135deg, #ffffff 0%, #fff9c4 100%); border-left: 6px solid #fbc02d;">
+        <span class="card-label" style="color: #fbc02d;" data-key="taleem_label">YOUTUBE LEARNING</span>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="font-size: 35px;">🕌</div>
+            <div style="text-align: left;">
+                <h3 style="margin: 0; font-size: 18px; color: #1b4332;" data-key="taleem_name">Mufti Anwar Ashrafi</h3>
+                <p style="margin: 0; font-size: 13px; color: #666;" data-key="taleem_desc">Deen ki baatein seekhein</p>
+            </div>
+        </div>
+    </div>
+
+    <span class="section-title" data-key="inspiration">Daily Inspiration</span>
+
+    <div class="content-card">
+        <span class="card-label" data-key="ayat_label">📖 Ayah</span>
+        <div class="arabic-text" id="daily-ayat-arabic">...</div>
+        <p id="daily-ayat-trans" style="font-style: italic; color: #555; font-size: 14px;"></p>
+    </div>
+
+    <div class="content-card">
+        <span class="card-label" data-key="hadees_label">📜 Hadees</span>
+        <p id="daily-hadees" style="font-size: 15px; line-height: 1.6;"></p>
+    </div>
+
+    <div class="content-card task-card">
+        <span class="card-label" data-key="task_label">🎯 Today's Task</span>
+        <p id="current-task" style="font-weight: 600; margin-bottom: 15px;"></p>
+        <button onclick="completeTask()" style="background: var(--p-green); color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold;" data-key="claim_btn">CLAIM +4 COINS</button>
+    </div>
+
+    <span class="section-title" data-key="tools_title">Islamic Tools</span>
+    <div class="features-grid">
+        <a href="quran.html" class="feature-item"><div class="feature-icon">📖</div><span class="feature-title" data-key="nav_quran"></span></a>
+        <a href="namaz.html" class="feature-item"><div class="feature-icon">🧎</div><span class="feature-title" data-key="tool_namaz"></span></a>
+        <a href="zariya.html" class="feature-item"><div class="feature-icon">✨</div><span class="feature-title" data-key="tool_zariya"></span></a>
+        <a href="https://www.scribd.com/document/933857491/Sunni-Bahishti-Zewar-Hindi-Part-1" target="_blank" class="feature-item"><div class="feature-icon">🌸</div><span class="feature-title" data-key="tool_women"></span></a>
+        <a href="tasbih.html" class="feature-item"><div class="feature-icon">📿</div><span class="feature-title" data-key="nav_tasbih"></span></a>
+        <a href="qibla.html" class="feature-item"><div class="feature-icon">🧭</div><span class="feature-title" data-key="nav_qibla"></span></a>
+        <a href="qaida.html" class="feature-item"><div class="feature-icon">📗</div><span class="feature-title" data-key="tool_qaida"></span></a>
+        <a href="sunnat.html" class="feature-item"><div class="feature-icon">✨</div><span class="feature-title" data-key="tool_sunnat"></span></a>
+    </div>
+
+    <div class="view-more" id="view-more-btn" onclick="toggleAllFeatures()" data-key="view_more">VIEW ALL TOOLS ▾</div>
+
+    <div id="extra-features" class="features-grid hidden">
+        <a href="azaan.html" class="feature-item"><div class="feature-icon">📢</div><span class="feature-title" data-key="tool_azaan"></span></a>
+        <a href="live.html" class="feature-item"><div class="feature-icon">🕌</div><span class="feature-title" data-key="tool_live"></span></a>
+        <a href="hadees.html" class="feature-item"><div class="feature-icon">📚</div><span class="feature-title" data-key="nav_hadees"></span></a>
+        <a href="kids.html" class="feature-item"><div class="feature-icon">🧒</div><span class="feature-title" data-key="tool_kids"></span></a>
+        <a href="tibbe_nabvi.html" class="feature-item"><div class="feature-icon">🌿</div><span class="feature-title" data-key="tool_tibbi"></span></a>
+        <a href="names.html" class="feature-item"><div class="feature-icon">👶</div><span class="feature-title" data-key="tool_names"></span></a>
+        <a href="seerat.html" class="feature-item"><div class="feature-icon">📜</div><span class="feature-title" data-key="tool_seerat"></span></a>
+        <a href="duas.html" class="feature-item"><div class="feature-icon">🤲</div><span class="feature-title" data-key="tool_duas"></span></a>
+    </div>
+
+    <div class="bottom-nav">
+     
+        <a href="quran.html" class="nav-link">📖<small data-key="nav_quran"></small></a>
+        <a href="tasbih.html" class="nav-link">📿<small data-key="nav_tasbih"></small></a>
+        <a href="profile.html" class="nav-link">👤<small data-key="nav_profile"></small></a>
+    </div>
+
+    <script src="translations.js"></script>
+    <script>
+        function openNav() { document.getElementById("mySidebar").style.width = "250px"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+
+        
+
+        function changeLanguage(lang) {
+            const t = translations[lang];
+            if(!t) return;
+
+            // Visibility Logic
+            const eduTitle = document.getElementById('edu-section-title');
+            const englishCard = document.getElementById('english-card');
+            const taleemCard = document.getElementById('taleem-card');
+
+            // Ab Hindi aur Urdu dono mein Educational section dikhega
+            const showEdu = (lang === 'hi' || lang === 'ur');
+
+            if(showEdu) {
+                eduTitle.classList.remove('hidden');
+                englishCard.classList.remove('hidden');
+                taleemCard.classList.remove('hidden');
+            } else {
+                eduTitle.classList.add('hidden');
+                englishCard.classList.add('hidden');
+                taleemCard.classList.add('hidden');
+            }
+
+            document.body.dir = t.dir;
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (t[key]) {
+                    if (el.tagName === 'INPUT') el.placeholder = t[key];
+                    else el.innerText = t[key];
+                }
+            });
+            localStorage.setItem('pref_lang', lang);
+            updateContent(); 
+            closeNav();
+        }
+
+        async function updateContent() {
+            const lang = localStorage.getItem('pref_lang') || 'ur';
+            const t = translations[lang];
+            document.getElementById('current-task').innerText = t.tasks[Math.floor(Math.random() * t.tasks.length)];
+            document.getElementById('daily-hadees').innerText = t.hadees[Math.floor(Math.random() * t.hadees.length)];
+            document.getElementById('user-coins').innerText = localStorage.getItem('deeni_coins') || 0;
+
+            try {
+                const randomAyatNum = Math.floor(Math.random() * 6236) + 1;
+                let ed = lang === 'en' ? 'en.ahmedali' : (lang === 'hi' ? 'hi.farooq' : (lang === 'ar' ? 'ar.jalalayn' : 'ur.jalandhry'));
+                const res = await fetch(`https://api.alquran.cloud/v1/ayah/${randomAyatNum}/editions/quran-simple,${ed}`);
+                const data = await res.json();
+                document.getElementById('daily-ayat-arabic').innerText = data.data[0].text;
+                document.getElementById('daily-ayat-trans').innerText = data.data[1].text;
+            } catch (e) {
+                document.getElementById('daily-ayat-arabic').innerText = "ayat loading ....";
+            }
+        }
+
+        function completeTask() {
+            let coins = parseInt(localStorage.getItem('deeni_coins')) || 0;
+            localStorage.setItem('deeni_coins', coins + 4);
+            document.getElementById('user-coins').innerText = localStorage.getItem('deeni_coins');
+            
+            updateContent(); 
+        }
+
+        function toggleAllFeatures() {
+            const extra = document.getElementById('extra-features');
+            const btn = document.getElementById('view-more-btn');
+            const lang = localStorage.getItem('pref_lang') || 'ur';
+            extra.classList.toggle('hidden');
+            btn.innerText = extra.classList.contains('hidden') ? translations[lang].view_more : translations[lang].show_less;
+        }
+
+        window.onload = function() {
+    const savedLang = localStorage.getItem('pref_lang') || 'ur';
+    document.getElementById('lang-select').value = savedLang;
+    changeLanguage(savedLang);
+
+    // 12-hour format mein convert karne ka function
+    const t12 = (time) => {
+        if (!time) return "--:--";
+        let [hrs, mins] = time.split(':');
+        hrs = parseInt(hrs);
+        const suffix = hrs >= 12 ? " PM" : " AM";
+        hrs = hrs % 12 || 12; 
+        return `${hrs}:${mins}${suffix}`;
+    };
+
+    // Location access karke timings fetch karna
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            fetchTimings(lat, lon);
+        }, () => {
+            // Agar user location block karde toh Default (New Delhi)
+            fetchTimings(28.6139, 77.2090);
+        });
+    } else {
+        fetchTimings(28.6139, 77.2090);
+    }
+
+    function fetchTimings(lat, lon) {
+    // method=1 ka matlab University of Islamic Sciences, Karachi (India/Pakistan ke liye best)
+    // school=1 ka matlab Hanafi method
+    fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=1&school=1`)
+        .then(r => r.json()).then(d => {
+            const t = d.data.timings;
+            
+            document.getElementById('fajr-t').innerText = t12(t.Fajr);
+            document.getElementById('dhuhr-t').innerText = t12(t.Dhuhr);
+            document.getElementById('asr-t').innerText = t12(t.Asr);
+            document.getElementById('maghrib-t').innerText = t12(t.Maghrib);
+            document.getElementById('isha-t').innerText = t12(t.Isha);
+            
+            document.getElementById('hijri-date').innerText = 
+                d.data.date.hijri.day + " " + d.data.date.hijri.month.en + " " + d.data.date.hijri.year + " AH";
+        });
+}
+
+};
+
+    </script>
+</body>
+</html>
